@@ -1,0 +1,15 @@
+{
+  "name": "ecom-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Polyglot e-commerce platform (Next.js + Express + Fastify + Spring Boot + SQL + MongoDB)",
+  "scripts": {
+    "start:all": "./start-all.sh",
+    "stop:all": "./stop-all.sh",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:express": "cd backend/express-service && npm run dev",
+    "dev:fastify": "cd backend/fastify-service && npm run dev",
+    "dev:java": "cd backend/java-service && ./mvnw spring-boot:run",
+    "install:all": "cd frontend && npm install && cd ../backend/express-service && npm install && cd ../fastify-service && npm install"
+  }
+}
