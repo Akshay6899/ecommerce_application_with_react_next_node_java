@@ -10,3 +10,9 @@ target/
 .idea/
 .vscode/
 prisma/migrations/
+.env.example
+init.sh
+start-all.sh
+stop-all.sh
+start.sh
+stop.sh
