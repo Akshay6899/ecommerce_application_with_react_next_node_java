@@ -41,8 +41,15 @@ export const authApi = {
 
 /* ---------------- Catalog (Fastify) ---------------- */
 export const catalogApi = {
-  listProducts: (q = '') =>
-    request<{ items: Product[]; total: number }>(`${CATALOG}/products${q ? `?q=${encodeURIComponent(q)}` : ''}`),
+  listProducts: (params: { q?: string; category?: string; skip?: number; limit?: number } = {}) => {
+    const qs = new URLSearchParams();
+    if (params.q) qs.set('q', params.q);
+    if (params.category) qs.set('category', params.category);
+    if (params.skip != null) qs.set('skip', String(params.skip));
+    if (params.limit != null) qs.set('limit', String(params.limit));
+    const url = `${CATALOG}/products${qs.toString() ? `?${qs}` : ''}`;
+    return request<{ items: Product[]; total: number; skip: number; limit: number }>(url);
+  },
   getProduct: (id: string) => request<Product>(`${CATALOG}/products/${id}`),
   getCart: (userId: string) => request<Cart>(`${CATALOG}/cart/${userId}`),
   addToCart: (userId: string, item: { productId: string; qty: number; price: number; title: string }) =>

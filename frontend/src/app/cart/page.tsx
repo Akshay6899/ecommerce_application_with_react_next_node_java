@@ -1,10 +1,13 @@
 'use client';
-import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/store/redux/store';
+import { removeItem, selectCartItems, selectCartSubtotal } from '@/store/redux/cartSlice';
 
 export default function Cart() {
-  const { items, remove, subtotal } = useCart();
+  const items = useAppSelector(selectCartItems);
+  const subtotal = useAppSelector(selectCartSubtotal);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   if (items.length === 0) {
@@ -28,7 +31,12 @@ export default function Cart() {
               </div>
               <div style={{ textAlign: 'right' }}>
                 <p className="price">₹{(i.price * i.qty).toLocaleString()}</p>
-                <button onClick={() => remove(i.productId)} style={{ background: 'transparent', color: 'red', marginTop: 8 }}>Remove</button>
+                <button
+                  onClick={() => dispatch(removeItem(i.productId))}
+                  style={{ background: 'transparent', color: 'red', marginTop: 8 }}
+                >
+                  Remove
+                </button>
               </div>
             </div>
           </div>
@@ -41,7 +49,9 @@ export default function Cart() {
         <div className="row between"><span>Delivery</span><span className="price">FREE</span></div>
         <hr />
         <div className="row between"><strong>Total</strong><strong>₹{subtotal.toLocaleString()}</strong></div>
-        <button className="btn-accent" style={{ width: '100%', marginTop: 16 }} onClick={() => router.push('/checkout')}>Place Order</button>
+        <button className="btn-accent" style={{ width: '100%', marginTop: 16 }} onClick={() => router.push('/checkout')}>
+          Place Order
+        </button>
       </aside>
     </div>
   );

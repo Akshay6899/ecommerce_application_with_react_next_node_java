@@ -8,7 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    catalogApi.listProducts()
+    catalogApi.listProducts({ limit: 8 })
       .then(r => setProducts(r.items))
       .catch(() => setProducts([]))
       .finally(() => setLoading(false));

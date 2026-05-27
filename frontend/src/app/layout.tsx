@@ -1,6 +1,6 @@
 import './../styles/globals.css';
 import type { Metadata } from 'next';
-import { CartProvider } from '@/context/CartContext';
+import ReduxProvider from '@/store/redux/Provider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -13,11 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <CartProvider>
+        <ReduxProvider>
           <Navbar />
           <main className="container" style={{ minHeight: '70vh' }}>{children}</main>
           <Footer />
-        </CartProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
